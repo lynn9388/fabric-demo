@@ -1,0 +1,21 @@
+{
+  "name": "web",
+  "version": "0.0.1",
+  "description": "Fabric Demo Web",
+  "author": "lynn9388",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "serverstart": "DEBUG=web:* npm run devstart"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.3.3",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

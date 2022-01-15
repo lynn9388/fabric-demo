@@ -1,0 +1,26 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+div.table {
+  display: table;
+}
+
+div.table_row {
+  display: table-row;
+}
+
+label, input, div.table_cell {
+  display: table-cell;
+  margin-bottom: 10px;
+}
+
+label {
+  padding-right: 10px;
+}
+
+textarea {
+  width: 100%;
+  max-width: 520px;
+}
