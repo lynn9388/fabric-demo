@@ -1,11 +1,15 @@
 "use strict";
 
 const express = require("express");
+const fabric = require("../fabric/fabric");
+
 const router = express.Router();
 
 router.get("/", function (req, res, next) {
     res.send("respond with a resource");
 });
+
+router.number = 1;
 
 /**
  * /api/assets/:asset_id    POST      Create asset
@@ -14,23 +18,27 @@ router.get("/", function (req, res, next) {
  * /api/assets/:asset_id    DELETE    Delete asset
  */
 router.route("/assets/:asset_id")
-    .post(function (req, res) {
+    .post(async function (req, res) {
         const asset_id = req.params.asset_id;
         const asset_value = req.body.asset_value;
-        res.json({ message: `Crate asset: ${asset_id}:${asset_value}` });
+        const result = await fabric.submitTransaction("createAsset", asset_id, asset_value);
+        res.json({ message: result });
     })
-    .get(function (req, res) {
+    .get(async function (req, res) {
         const asset_id = req.params.asset_id;
-        res.json({ message: `Read asset: ${asset_id}` });
+        const result = await fabric.evaluateTransaction("readAsset", asset_id);
+        res.json({ message: result });
     })
-    .put(function (req, res) {
+    .put(async function (req, res) {
         const asset_id = req.params.asset_id;
         const asset_value = req.body.asset_value;
-        res.json({ message: `Update asset: ${asset_id}:${asset_value}` });
+        const result = await fabric.submitTransaction("updateAsset", asset_id, asset_value);
+        res.json({ message: result });
     })
-    .delete(function (req, res) {
+    .delete(async function (req, res) {
         const asset_id = req.params.asset_id;
-        res.json({ message: `Delete asset: ${asset_id}` });
+        const result = await fabric.submitTransaction("deleteAsset", asset_id);
+        res.json({ message: result });
     });
 
 module.exports = router;
