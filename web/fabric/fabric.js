@@ -7,21 +7,21 @@ const debug = require("debug")("web:fabric");
 
 async function getContract() {
     // Create a new file system based wallet for managing identities.
-    const walletPath = path.resolve(__dirname, "wallet");
+    const walletPath = path.resolve(__dirname, "wallets/Org1");
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     debug(`Wallet path: ${walletPath}`);
 
     // Create a new gateway for connecting to our peer node.
     const gateway = new Gateway();
-    const connectionProfilePath = path.resolve(__dirname, "connection.json");
+    const connectionProfilePath = path.resolve(__dirname, "gateways/org1gateway.json");
     debug(`Connection profile path: ${connectionProfilePath}`);
 
     const connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, "utf8"));
-    const connectionOptions = { wallet, identity: "Org1 Admin", discovery: { enabled: true, asLocalhost: true } };
+    const connectionOptions = { wallet, identity: "org1admin", discovery: { enabled: true, asLocalhost: true } };
     await gateway.connect(connectionProfile, connectionOptions);
 
     // Get the network (channel) our contract is deployed to.
-    const network = await gateway.getNetwork("mychannel");
+    const network = await gateway.getNetwork("channel1");
 
     // Get the contract from the network.
     const contract = network.getContract("contract");
